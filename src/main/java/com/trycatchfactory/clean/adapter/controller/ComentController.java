@@ -1,5 +1,7 @@
 package com.trycatchfactory.clean.adapter.controller;
 
+import com.trycatchfactory.clean.adapter.presenter.ComentPresenter;
+import com.trycatchfactory.clean.adapter.presenter.ComentResponseDTO;
 import com.trycatchfactory.clean.domain.entity.Coment;
 import com.trycatchfactory.clean.domain.usecase.ComentUseCase;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class ComentController {
 
     private  final ComentUseCase comentUseCase;
-    public ComentController(ComentUseCase comentUseCase) {
+    private  final ComentPresenter comentPresenter;
+
+    /**
+     * Constructor Method
+     * @param comentUseCase
+     * @param comentPresenter
+     */
+    public ComentController(ComentUseCase comentUseCase, ComentPresenter comentPresenter) {
         this.comentUseCase = comentUseCase;
+        this.comentPresenter = comentPresenter;
     }
 
     /**
@@ -21,14 +31,10 @@ public class ComentController {
      * @return
      */
     @GetMapping("coments/{id}")
-    public ResponseEntity<Coment> getUserById(@PathVariable String id) {
+    public ResponseEntity<ComentResponseDTO> getUserById(@PathVariable String id) {
 
         Coment coment = comentUseCase.getComentById(id);
-        if (coment != null) {
-            return new ResponseEntity<>(coment, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return  comentPresenter.present(coment);
     }
 
     /**
@@ -40,6 +46,6 @@ public class ComentController {
     public ResponseEntity<Void> createComent(@RequestBody Coment coment){
         comentUseCase.execute(coment);
 
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return  comentPresenter.PresenterCreateComent();
     }
 }

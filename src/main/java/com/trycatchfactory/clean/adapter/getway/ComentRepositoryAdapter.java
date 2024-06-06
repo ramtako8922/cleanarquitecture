@@ -6,14 +6,12 @@ import com.trycatchfactory.clean.infraestructure.persistence.ComentEntity;
 import com.trycatchfactory.clean.infraestructure.persistence.SpringDataComentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
-public class UserRepositoryAdapter implements ComentRepository {
+public class ComentRepositoryAdapter implements ComentRepository {
 
     private final SpringDataComentRepository springDataUserRepository;
 
     @Autowired
-    public UserRepositoryAdapter(SpringDataComentRepository springDataUserRepository) {
+    public ComentRepositoryAdapter(SpringDataComentRepository springDataUserRepository) {
         this.springDataUserRepository = springDataUserRepository;
     }
     @Override
