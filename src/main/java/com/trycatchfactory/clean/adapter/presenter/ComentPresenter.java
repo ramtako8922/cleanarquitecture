@@ -27,4 +27,25 @@ public class ComentPresenter {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * Response udate coment
+     * @return
+     */
+    public  ResponseEntity<Void> presenterUpdateComent( boolean returnContent) {
+
+        if (returnContent) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    public  ResponseEntity<Void> presenterdeleteByIdComent( boolean returnContent) {
+
+        if (returnContent) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

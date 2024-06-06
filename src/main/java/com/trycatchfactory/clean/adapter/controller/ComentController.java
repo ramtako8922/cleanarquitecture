@@ -38,14 +38,32 @@ public class ComentController {
     }
 
     /**
-     * Save coment
+     * Save coment restcontroller
      * @param coment
      * @return
      */
     @PostMapping("/coments")
     public ResponseEntity<Void> createComent(@RequestBody Coment coment){
-        comentUseCase.execute(coment);
+        comentUseCase.saveComent(coment);
 
         return  comentPresenter.PresenterCreateComent();
+    }
+
+    /**
+     * Update comment api restcontroller
+     * @param id
+     * @param coment
+     * @return
+     */
+    public ResponseEntity<Void> updateComent(@PathVariable String id, @RequestBody Coment coment){
+        comentUseCase.updateComent(id,coment);
+        boolean returnContent=true;
+        return comentPresenter.presenterUpdateComent(returnContent);
+    }
+
+    public ResponseEntity<Void> deleteComentById(@PathVariable String id){
+        comentUseCase.deleteComentById(id);
+        boolean returnContent=true;
+        return comentPresenter.presenterdeleteByIdComent(returnContent);
     }
 }
