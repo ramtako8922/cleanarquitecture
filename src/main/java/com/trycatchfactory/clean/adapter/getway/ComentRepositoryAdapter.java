@@ -5,15 +5,18 @@ import com.trycatchfactory.clean.domain.repositoy.ComentRepository;
 import com.trycatchfactory.clean.infraestructure.persistence.ComentEntity;
 import com.trycatchfactory.clean.infraestructure.persistence.SpringDataComentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
+@Component
 public class ComentRepositoryAdapter implements ComentRepository {
 
     private final SpringDataComentRepository springDataUserRepository;
 
     /**
      * Constructor Method and injected dependendencies
+     *
      * @param springDataUserRepository
      */
     @Autowired
@@ -23,40 +26,44 @@ public class ComentRepositoryAdapter implements ComentRepository {
 
     @Override
     public List<Coment> findAll() {
-        return null;
+        List<ComentEntity> comentEntities= (List<ComentEntity>) springDataUserRepository.findAll();
+        return comentEntities.stream().map(comentEntity ->
+         new Coment(comentEntity.getId(),comentEntity.getTitle(),comentEntity.getContent())).collect(Collectors.toList());
+
+
     }
 
     /**
      * find comment by id in adapter leavel
+     *
      * @param id
      * @return
      */
     @Override
-    public Coment findById(String id){
-      ComentEntity comentEntity=springDataUserRepository.findById(id).orElse(null);
-         if(comentEntity!=null){
+    public Coment findById(Long id) {
+        ComentEntity comentEntity = springDataUserRepository.findById(id).orElse(null);
+        if (comentEntity != null) {
 
-          Coment coment=new Coment();
-           coment.setId(comentEntity.getId());
-           coment.setTitle(comentEntity.getTitle());
-           coment.setContent(comentEntity.getContent());
+            Coment coment = new Coment();
+            coment.setId(comentEntity.getId());
+            coment.setTitle(comentEntity.getTitle());
+            coment.setContent(comentEntity.getContent());
 
-             return coment;
-         }
-       return null;
+            return coment;
+        }
+        return null;
     }
-
-
 
 
     /**
      * Save the coment in adapter leavel
+     *
      * @param coment
      */
     @Override
     public void save(Coment coment) {
 
-        ComentEntity comentEntity=new ComentEntity();
+        ComentEntity comentEntity = new ComentEntity();
         comentEntity.setId(coment.getId());
         comentEntity.setTitle(coment.getTitle());
         comentEntity.setContent(coment.getContent());
@@ -64,13 +71,14 @@ public class ComentRepositoryAdapter implements ComentRepository {
         springDataUserRepository.save(comentEntity);
 
     }
+
     @Override
-    public void update(String id, Coment coment) {
-        ComentEntity comentEntity=springDataUserRepository.findById(id).orElse(null);
-        if(comentEntity!=null){
+    public void update(Long id, Coment coment) {
+        ComentEntity comentEntity = springDataUserRepository.findById(id).orElse(null);
+        if (comentEntity != null) {
 
 
-            comentEntity.setId(coment.getId());
+
             comentEntity.setTitle(coment.getTitle());
             comentEntity.setContent(coment.getContent());
 
@@ -83,10 +91,11 @@ public class ComentRepositoryAdapter implements ComentRepository {
 
     /**
      * Delte comment in adaprte level
+     *
      * @param id
      */
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         springDataUserRepository.deleteById(id);
     }
 

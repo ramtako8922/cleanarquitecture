@@ -1,13 +1,22 @@
 package com.trycatchfactory.clean.domain.entity;
 
 public class Coment {
-    private String id;
+    private Long id;
 
     private String title;
 
     private String content;
 
-    public String getId() {
+    public Coment() {
+    }
+
+    public Coment(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -19,7 +28,7 @@ public class Coment {
         return content;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -8,9 +8,11 @@ public interface ComentRepository {
  public List<Coment> findAll();
     public void save(Coment coment);
 
-    public Coment findById(String id);
+    public Coment findById(Long id);
 
-    public void update(String id ,Coment coment);
 
-    public void deleteById(String id );
+
+    public void update(Long id, Coment coment);
+
+    public void deleteById(Long id );
 }

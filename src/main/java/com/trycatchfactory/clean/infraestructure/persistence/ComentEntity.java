@@ -5,11 +5,10 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Coment")
 public class ComentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String title;
 

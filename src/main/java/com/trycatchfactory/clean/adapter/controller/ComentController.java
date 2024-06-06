@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ComentController {
@@ -25,13 +27,18 @@ public class ComentController {
         this.comentPresenter = comentPresenter;
     }
 
+    @GetMapping("/coments")
+    public ResponseEntity<List<ComentResponseDTO>> getAllUsers() {
+        List<Coment> comentList = comentUseCase.getAllComents();
+        return comentPresenter.presentAllComents(comentList);
+    }
     /**
      * Get coment by id
      * @param id
      * @return
      */
     @GetMapping("coments/{id}")
-    public ResponseEntity<ComentResponseDTO> getUserById(@PathVariable String id) {
+    public ResponseEntity<ComentResponseDTO> getUserById(@PathVariable Long id) {
 
         Coment coment = comentUseCase.getComentById(id);
         return  comentPresenter.present(coment);
@@ -55,13 +62,20 @@ public class ComentController {
      * @param coment
      * @return
      */
-    public ResponseEntity<Void> updateComent(@PathVariable String id, @RequestBody Coment coment){
+    @PutMapping("coments/{id}")
+    public ResponseEntity<Void> updateComent(@PathVariable Long id, @RequestBody Coment coment){
         comentUseCase.updateComent(id,coment);
         boolean returnContent=true;
         return comentPresenter.presenterUpdateComent(returnContent);
     }
 
-    public ResponseEntity<Void> deleteComentById(@PathVariable String id){
+    /**
+     * Delete comment by id restcontroller
+     * @param id
+     * @return
+     */
+    @DeleteMapping("coments/{id}")
+    public ResponseEntity<Void> deleteComentById(@PathVariable Long id){
         comentUseCase.deleteComentById(id);
         boolean returnContent=true;
         return comentPresenter.presenterdeleteByIdComent(returnContent);

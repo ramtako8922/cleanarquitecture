@@ -3,8 +3,26 @@ package com.trycatchfactory.clean.adapter.presenter;
 import com.trycatchfactory.clean.domain.entity.Coment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+@Component
 public class ComentPresenter {
+
+
+    /**
+     * Response coment list
+     * @param comentList
+     * @return
+     */
+    public ResponseEntity<List<ComentResponseDTO>> presentAllComents(List<Coment> comentList) {
+        List<ComentResponseDTO> comentResponseDTOList = comentList.stream()
+                .map( coment-> new ComentResponseDTO(coment.getId(), coment.getTitle(), coment.getContent()))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(comentResponseDTOList, HttpStatus.OK);
+    }
+
     /**
      * response by comment found
      * @param coment
@@ -48,4 +66,6 @@ public class ComentPresenter {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+
 }

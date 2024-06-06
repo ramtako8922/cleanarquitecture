@@ -2,6 +2,7 @@ package com.trycatchfactory.clean.domain.usecase;
 
 import com.trycatchfactory.clean.domain.entity.Coment;
 import com.trycatchfactory.clean.domain.repositoy.ComentRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ComentUseCase {
      * @param id
      * @return
      */
-    public Coment getComentById(String id){
+    public Coment getComentById(Long id){
         return  comentRepository.findById(id);
     }
 
@@ -50,7 +51,7 @@ public class ComentUseCase {
      * @param coment
      */
 
-    public void updateComent (String id, Coment coment){
+    public void updateComent (Long id, Coment coment){
        comentRepository.update(id,coment);
     }
 
@@ -58,7 +59,7 @@ public class ComentUseCase {
      * Delete coment by Id domain Level
      * @param id
      */
-    public void deleteComentById (String id){
+    public void deleteComentById (Long id){
         comentRepository.deleteById(id);
     }
 

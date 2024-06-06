@@ -1,6 +1,8 @@
 package com.trycatchfactory.clean.infraestructure.persistence;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SpringDataComentRepository extends CrudRepository<ComentEntity,String> {
+@Repository
+public interface SpringDataComentRepository extends CrudRepository<ComentEntity,Long> {
 }
